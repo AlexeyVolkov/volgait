@@ -1,33 +1,135 @@
-function change(hash){
-	var arr = hash.split('/');
-	var html = "helo";
-
-	/*switch(arr[0]){
-		case 'compose':
-			$("#compose").fadeIn();
-		break;
-	}*/
-}
-
 function EmailController($scope) {
+	$scope.Auth = {};
+	$scope.activeTab = "inbox";
     $scope.isPopupVisible = false;
     $scope.isComposePopupVisible = false;
+    $scope.composeEmail = {};
+    $scope.sentEmails = [
+    {
+        to: 'maria@gmail.com',
+        subject: 'Привет',
+        date: 'Jan 15',
+        body: 'Как твои дела?'
+    },
+    {
+        to: 'maria@gmail.com',
+        subject: 'Привет',
+        date: 'Jan 15',
+        body: 'Как твои дела?'
+    },
+    {
+        to: 'maria@gmail.com',
+        subject: 'Привет',
+        date: 'Jan 15',
+        body: 'Как твои дела?'
+    },
+    {
+        to: 'maria@gmail.com',
+        subject: 'Привет',
+        date: 'Jan 15',
+        body: 'Как твои дела?'
+    },
+    {
+        to: 'maria@gmail.com',
+        subject: 'Привет',
+        date: 'Jan 15',
+        body: 'Как твои дела?'
+    }
+];
+	$scope.spam = [
+    {
+        from: 'maria@gmail.com',
+        subject: 'Привет',
+        date: 'Jan 15',
+        body: 'Как твои дела?'
+    },
+    {
+        from: 'maria@gmail.com',
+        subject: 'Привет',
+        date: 'Jan 15',
+        body: 'Как твои дела?'
+    }
+];
+	$scope.important = [
+    {
+        from: 'maria@gmail.com',
+        subject: 'Пока',
+        date: 'Jan 15',
+        body: 'Как твои дела?'
+    },
+    {
+        from: 'maria@gmail.com',
+        subject: 'Пароль',
+        date: 'Jan 15',
+        body: 'Как твои дела?'
+    }
+];
+//log in
+	$scope.Authf = function(Auth){
+		$scope.Auth = Auth;
+		console.log($scope.Auth);
+	};
+//sending
+    $scope.sendEmail = function() {
+    $scope.composeEmail.date = new Date();
+    $scope.sentEmails.push($scope.composeEmail);
+    console.log($scope.sentEmails);
+    $scope.isComposePopupVisible = false;
+};
 
-    $scope.showComposePopup = function(){
-    	$scope.isComposePopupVisible = true;
-    };
+	$scope.showComposePopup = function() {
+    $scope.composeEmail = {};
+    $scope.isComposePopupVisible = true;
+};
 
+//viewing
     $scope.showPopup = function (email) {
     $scope.isPopupVisible = true;
     $scope.selectedEmail = email;
 };
 
+//Deleting
+	$scope.deleteMail = function (email) {
+		var answer = confirm("Вы уверены, что хотите удалить это сообщение?");
+
+	};
+
     $scope.emails = [
     {
-        from: 'John',
-        subject: 'I love angular',
+        from: 'john@gmail.com',
+        subject: 'Сегодня прекрасный день',
         date: 'Jan 1',
-        body: 'hello world!'
+        body: 'Всем привет!'
+    },
+    {
+        from: 'john@gmail.com',
+        subject: 'Сегодня прекрасный день',
+        date: 'Jan 1',
+        body: 'Всем привет!'
+    },
+    {
+        from: 'john@gmail.com',
+        subject: 'Сегодня прекрасный день',
+        date: 'Jan 1',
+        body: 'Всем привет!'
+    },
+    {
+        from: 'john@gmail.com',
+        subject: 'Сегодня прекрасный день',
+        date: 'Jan 1',
+        body: 'Всем привет!'
+    },
+    {
+        from: 'john@gmail.com',
+        subject: 'Сегодня прекрасный день',
+        date: 'Jan 1',
+        body: 'Всем привет!'
+    },
+    {
+        from: 'Ember',
+        subject: 'I hate you Angular!',
+        date: 'Dec 8',
+        body: 'wassup dude'
     },
     {
         from: 'Jack',
@@ -42,21 +144,8 @@ function EmailController($scope) {
         body: 'wassup dude'
     }
 ];
-}
+}//EmailController
 
 $(document).ready(function(){
-	var hash = window.location.hash.slice(3);
-	change(hash);
-	// on Hash change
-	$(window).on('hashchange',function(){ 
-    	hash = location.hash.slice(3);
-    	change(hash);
-	});
-
-	//compose button
-	$("#compose").click(function(){
-		var compose_hash = "#!/compose"
-		window.location.hash = compose_hash;
-		change(hash);
-	});
+	
 });
