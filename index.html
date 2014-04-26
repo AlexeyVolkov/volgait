@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html ng-app>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Bootstrap 101 Template</title>
+    <title>Mail</title>
 
     <!-- Bootstrap -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -19,20 +19,21 @@
       <script src="js/html5shiv.js"></script>
       <script src="js/respond.min.js"></script>
     <![endif]-->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.16/angular.min.js"></script>
   </head>
   <body>
     <div class="container">
       <!-- header -->
       <div class="row header">
-        <div class="col-xs-4 logo">
+        <div class="col-xs-2 logo">
           <i class="fa fa-rocket"></i>Почта
         </div>
-        <div class="col-xs-4 compose">
+        <div class="col-xs-2 compose">
           <button type="button" class="btn btn-warning" id="compose">
             Написать <i class="fa fa-pencil-square-o"></i>
           </button>
         </div>
-        <div class="col-xs-4 search">
+        <div class="col-xs-8 search">
           <div class="input-group">
             <input type="text" class="form-control">
             <span class="input-group-btn">
@@ -42,9 +43,9 @@
         </div>
       </div>
       <!-- main -->
-      <div class="row main">
+      <div class="row main" ng-app ng-controller="EmailController">
         <!-- Catigories -->
-        <div class="col-xs-6 col-sm-2 cats">
+        <div class="col-xs-4 col-sm-2 cats">
           <ul class="nav nav-pills nav-stacked">
             <li class="active"><a href="#!/inbox">Входящие
               <span class="badge pull-right">42</span>
@@ -60,21 +61,47 @@
             </a></li>
           </ul>
         </div>
-        <div class="col-xs-6 col-sm-2">
-          <div class="list-group">
-            <a href="#" class="list-group-item active">
-              <h4 class="list-group-item-heading">Вы приглашены на...</h4>
-              <p class="list-group-item-text">Для подробной информации пройдите ...</p>
-            </a>
-          </div>
-          <div class="list-group">
-            <a href="#" class="list-group-item">
-              <h4 class="list-group-item-heading">Поздравляем Вас со столетием со ..</h4>
-              <p class="list-group-item-text">Владими Ильич Ленин был замечат..</p>
-            </a>
-          </div>
-        </div>
-        <div class="col-xs-12 col-sm-8 message">
+        <div class="col-xs-8 col-sm-10" ng-app ng-controller="EmailController">
+<table class="table table-bordered table-condensed">
+    <tbody>
+        <tr ng-repeat="email in emails" data-toggle="modal" data-target="#myModal"  ng-click="showPopup(email)">
+          <td>{{ email.from }}</td>
+          <td>{{ email.subject }}</td>
+          <td>{{ email.date }}</td>
+        </tr>
+    </tbody>
+</table>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">{{ selectedEmail.subject }}</h4>
+      </div>
+      <div class="modal-body">
+        <strong>From:</strong> {{selectedEmail.from}} <br />
+        <strong>Date:</strong> {{selectedEmail.date}} <br />
+        <br />
+        <p>
+            Hey You, <br />
+            <br />
+            How you doing?<br />
+            <br />
+            Sincerely<br />
+            Your Bro
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+        <!--<div class="col-xs-12 col-sm-8 message">
           <div class="panel panel-primary">
             <div class="panel-heading">
               <h3 class="panel-title">Вы приглашены на церемонию открытия XXV олимпийских игр</h3>
@@ -88,7 +115,7 @@
               proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
             </div>    
           </div>
-        </div>
+        </div>-->
       </div>
     </div>
 
