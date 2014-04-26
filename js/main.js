@@ -1,9 +1,11 @@
-require(["jquery.min"], function(util) {
-    console.log("jquery.min.js");
-});
-require(["bootstrap.min"], function(util) {
-    console.log("bootstrap.min.js");
-});
-require(["less-1.7.0.min"], function(util) {
-    console.log("less-1.7.0.min.js");
+$(document).ready(function(){
+	var hash = window.location.hash.slice(2);
+
+	// on Hash change
+	$(window).on('hashchange',function(){ 
+    	hash = location.hash.slice(2);
+    	console.log(hash);
+	});
+
+	console.log(hash);
 });
