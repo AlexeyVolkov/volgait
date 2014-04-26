@@ -29,7 +29,7 @@
           <i class="fa fa-rocket"></i>Почта
         </div>
         <div class="col-xs-2 compose">
-          <button type="button" class="btn btn-warning" id="compose">
+          <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#myComposeModal" id="compose">
             Написать <i class="fa fa-pencil-square-o"></i>
           </button>
         </div>
@@ -42,6 +42,35 @@
           </div>
         </div>
       </div>
+
+
+<!-- COMPOSE -->
+<div class="modal fade" id="myComposeModal" tabindex="-1" role="dialog" aria-labelledby="myComposeModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myComposeModalLabel">Написать письмо</h4>
+      </div>
+      <div class="modal-body">
+        <form>
+            <input class="form-control" type="text" placeholder="Кому" style="width:95%;"><br />
+            <input class="form-control" type="text" placeholder="Тема" style="width:95%;"><br />
+            <textarea class="form-control" style="width:95%;" rows="10"></textarea>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+        <button type="button" class="btn btn-primary">Отправить</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
       <!-- main -->
       <div class="row main" ng-app ng-controller="EmailController">
         <!-- Catigories -->
@@ -61,6 +90,8 @@
             </a></li>
           </ul>
         </div>
+
+<!-- INBOX -->        
         <div class="col-xs-8 col-sm-10" ng-app ng-controller="EmailController">
 <table class="table table-bordered table-condensed">
     <tbody>
@@ -81,15 +112,15 @@
         <h4 class="modal-title" id="myModalLabel">{{ selectedEmail.subject }}</h4>
       </div>
       <div class="modal-body">
-        <strong>From:</strong> {{selectedEmail.from}} <br />
-        <strong>Date:</strong> {{selectedEmail.date}} <br />
+        <strong>От:</strong> {{selectedEmail.from}} <br />
+        <strong>Дата:</strong> {{selectedEmail.date}} <br />
         <br />
         <p>
             {{ selectedEmail.body }}
         </p>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
       </div>
     </div>
   </div>
