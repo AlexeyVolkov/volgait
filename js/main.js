@@ -65,9 +65,20 @@ function EmailController($scope) {
     }
 ];
 //log in
-	$scope.Authf = function(Auth){
-		$scope.Auth = Auth;
-		console.log($scope.Auth);
+	$scope.Authf = function(){
+		var people = br.storage.get('mailPeople');
+  		if(!people){
+  			var arr = [$scope.Auth];
+    		br.storage.set('mailPeople', arr);
+			console.log(arr);
+  		}
+  		else{
+  			var arr = br.storage.get('mailPeople');
+  			arr.push($scope.Auth);
+  			br.storage.set('mailPeople', arr);
+  			console.log(arr);
+  		}
+  		$(".login").fadeOut();
 	};
 //sending
     $scope.sendEmail = function() {

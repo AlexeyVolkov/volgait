@@ -42,54 +42,47 @@
           </div>
         </div>
       </div>
-
       <!-- main -->
       <div class="row main" ng-app ng-controller="EmailController">
 
-
-<!-- COMPOSE -->
-<div class="modal fade" id="myComposeModal" tabindex="-1" role="dialog" aria-labelledby="myComposeModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myComposeModalLabel">Написать письмо</h4>
+      <!-- COMPOSE -->
+      <div class="modal fade" id="myComposeModal" tabindex="-1" role="dialog" aria-labelledby="myComposeModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+              <h4 class="modal-title" id="myComposeModalLabel">Написать письмо</h4>
+            </div>
+            <div class="modal-body">
+              <form>
+                  <input class="form-control" type="text" placeholder="Кому" style="width:95%;" ng-model="composeEmail.to"><br />
+                  <input class="form-control" type="text" placeholder="Тема" style="width:95%;" ng-model="composeEmail.subject"><br />
+                  <textarea class="form-control" style="width:95%;" rows="10" ng-model="composeEmail.body"></textarea>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+              <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="sendEmail()">Отправить</button>
+            </div>
+          </div>
+        </div>
       </div>
-      <div class="modal-body">
-        <form>
-            <input class="form-control" type="text" placeholder="Кому" style="width:95%;" ng-model="composeEmail.to"><br />
-            <input class="form-control" type="text" placeholder="Тема" style="width:95%;" ng-model="composeEmail.subject"><br />
-            <textarea class="form-control" style="width:95%;" rows="10" ng-model="composeEmail.body"></textarea>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Отправить</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-        <!-- Catigories -->
-        <div class="col-xs-4 col-sm-2 cats">
-          <ul class="nav nav-pills nav-stacked">
-            <li ng-class="{active: activeTab == 'inbox'}">
-              <a ng-click="activeTab='inbox'">Входящие
-                <span class="badge pull-right">{{ emails.length }}</span>
-              </a>
-            </li>
-            <li ng-class="{active: activeTab == 'sent'}">
-              <a ng-click="activeTab='sent'">Отправленные
-               <span class="badge pull-right">{{ sentEmails.length }}</span>
-              </a>
-            </li>
-            <li ng-class="{active: activeTab == 'spam'}">
-              <a ng-click="activeTab='spam'">Спам
-               <span class="badge pull-right">{{ spam.length }}</span>
+      <!-- Catigories -->
+      <div class="col-xs-4 col-sm-2 cats">
+        <ul class="nav nav-pills nav-stacked">
+          <li ng-class="{active: activeTab == 'inbox'}">
+            <a ng-click="activeTab='inbox'">Входящие
+              <span class="badge pull-right">{{ emails.length }}</span>
+            </a>
+          </li>
+          <li ng-class="{active: activeTab == 'sent'}">
+            <a ng-click="activeTab='sent'">Отправленные
+              <span class="badge pull-right">{{ sentEmails.length }}</span>
+            </a>
+          </li>
+          <li ng-class="{active: activeTab == 'spam'}">
+            <a ng-click="activeTab='spam'">Спам
+              <span class="badge pull-right">{{ spam.length }}</span>
             </a></li>
             <li ng-class="{active: activeTab == 'important'}">
               <a ng-click="activeTab='important'">Спам
@@ -97,92 +90,86 @@
             </a></li>
           </ul>
         </div>
-
-<!-- INBOX -->        
+        <!-- INBOX -->        
         <div class="col-xs-8 col-sm-10" >
-<table class="table table-bordered table-striped table-hover" ng-show="activeTab=='inbox'">
-    <tbody>
-        <tr ng-repeat="email in emails">
-          <td>{{ email.from }}</td>
-          <td class="warning" data-toggle="modal" data-target="#myModal" ng-click="showPopup(email)">{{ email.subject }}</td>
-          <td>{{ email.date }}</td>
-          <td><button type="button" class="btn btn-danger" ng-click="deleteMail()">&times;</button></td>
-        </tr>
-    </tbody>
-</table>
-
+        <table class="table table-bordered table-striped table-hover" ng-show="activeTab=='inbox'">
+            <tbody>
+               <tr ng-repeat="email in emails">
+                  <td>{{ email.from }}</td>
+                  <td class="warning" data-toggle="modal" data-target="#myModal" ng-click="showPopup(email)">{{ email.subject }}</td>
+                  <td>{{ email.date }}</td>
+                  <td><button type="button" class="btn btn-danger" ng-click="deleteMail()">&times;</button></td>
+                </tr>
+            </tbody>
+        </table>
 <!-- SENTBOX -->
-<table class="table table-bordered table-condensed" ng-show="activeTab=='sent'">
-    <tbody>
-        <tr ng-repeat="email in sentEmails">
-          <td>{{ email.to }}</td>
-          <td class="warning" data-toggle="modal" data-target="#myModal" ng-click="showPopup(email)">{{ email.subject }}</td>
-          <td>{{ email.date | date:'MMM d' }}</td>
-          <td><button type="button" class="btn btn-danger" ng-click="deleteMail()">&times;</button></td>
-        </tr>
-    </tbody>
-</table>
-
+        <table class="table table-bordered table-condensed" ng-show="activeTab=='sent'">
+            <tbody>
+                <tr ng-repeat="email in sentEmails">
+                  <td>{{ email.to }}</td>
+                  <td class="warning" data-toggle="modal" data-target="#myModal" ng-click="showPopup(email)">{{ email.subject }}</td>
+                  <td>{{ email.date | date:'MMM d' }}</td>
+                  <td><button type="button" class="btn btn-danger" ng-click="deleteMail()">&times;</button></td>
+                </tr>
+            </tbody>
+        </table>
 <!-- SPAM -->        
         <div class="col-xs-8 col-sm-10" >
-<table class="table table-bordered table-striped table-hover" ng-show="activeTab=='spam'">
-    <tbody>
-        <tr ng-repeat="email in spam">
-          <td>{{ email.from }}</td>
-          <td class="warning" data-toggle="modal" data-target="#myModal" ng-click="showPopup(email)">{{ email.subject }}</td>
-          <td>{{ email.date }}</td>
-          <td><button type="button" class="btn btn-danger" ng-click="deleteMail()">&times;</button></td>
-        </tr>
-    </tbody>
-</table>
-
+        <table class="table table-bordered table-striped table-hover" ng-show="activeTab=='spam'">
+            <tbody>
+                <tr ng-repeat="email in spam">
+                  <td>{{ email.from }}</td>
+                  <td class="warning" data-toggle="modal" data-target="#myModal" ng-click="showPopup(email)">{{ email.subject }}</td>
+                  <td>{{ email.date }}</td>
+                  <td><button type="button" class="btn btn-danger" ng-click="deleteMail()">&times;</button></td>
+                </tr>
+            </tbody>
+        </table>
 <!-- IMPORTANT -->        
         <div class="col-xs-8 col-sm-10" >
-<table class="table table-bordered table-striped table-hover" ng-show="activeTab=='important'">
-    <tbody>
-        <tr ng-repeat="email in important">
-          <td>{{ email.from }}</td>
-          <td class="warning" data-toggle="modal" data-target="#myModal" ng-click="showPopup(email)">{{ email.subject }}</td>
-          <td>{{ email.date }}</td>
-          <td><button type="button" class="btn btn-danger" ng-click="deleteMail()">&times;</button></td>
-        </tr>
-    </tbody>
-</table>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">{{ selectedEmail.subject }}</h4>
-      </div>
-      <div class="modal-body">
-        <strong>От:</strong> {{selectedEmail.from}} <br />
-        <strong>Дата:</strong> {{selectedEmail.date}} <br />
-        <br />
-        <p>
-            {{ selectedEmail.body }}
-        </p>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
-      </div>
-    </div>
-  </div>
-</div>
-
+        <table class="table table-bordered table-striped table-hover" ng-show="activeTab=='important'">
+            <tbody>
+                <tr ng-repeat="email in important">
+                  <td>{{ email.from }}</td>
+                  <td class="warning" data-toggle="modal" data-target="#myModal" ng-click="showPopup(email)">{{ email.subject }}</td>
+                  <td>{{ email.date }}</td>
+                  <td><button type="button" class="btn btn-danger" ng-click="deleteMail()">&times;</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">{{ selectedEmail.subject }}</h4>
+              </div>
+              <div class="modal-body">
+                <strong>От:</strong> {{selectedEmail.from}} <br />
+                <strong>Дата:</strong> {{selectedEmail.date}} <br />
+                <br />
+                <p>
+                    {{ selectedEmail.body }}
+                </p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
-
+<!-- Enter -->
+  <div class="login">
     <div class="jumbotron" ng-app ng-controller="EmailController">
       <h1>Вход</h1>
-      <form>
         <input class="form-control" type="text" placeholder="Логин" style="width:95%;" ng-model="Auth.login"><br />
         <input class="form-control" type="password" placeholder="Пароль" style="width:95%;" ng-model="Auth.password"><br />
         <input type="submit" class="btn btn-primary btn-lg" role="button" ng-click="Authf()" value="Войти">
-      </form>
     </div>
+  </div>
 
 
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
